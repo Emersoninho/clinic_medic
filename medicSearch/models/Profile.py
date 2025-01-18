@@ -2,7 +2,7 @@ from medicSearch.models import *
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.IntergerField(choices=ROLE_CHOICE, default=3)
+    role = models.IntegerField(choices=ROLE_CHOICE, default=3)
     birthday = models.DateField(default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
