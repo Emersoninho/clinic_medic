@@ -29,6 +29,21 @@
                     </div>
                 {% endfor %}
             </div>
+            <div class="row">
+                <nav aria-label="Page navigation" class="navigation">
+                    <ul class="pagination">
+                        {% if medics.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1{{parameters}}">&laquo; Primeiro</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{medics.previous_page_number}}{{parameters}}">Anterior</a></li>
+                        {% endif %}    
+                            <li class="page-item"><a class="page-link" href="#">Página {{medics.number}} de {{medics.paginator.num_pages}}.</a></li>
+                        {% if medics.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{medics.next_page_number}}{{parameters}}">Próximo</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{medics.paginator.num+pages}}{{parameters}}">Último &raquo;</a></li>
+                        {% endif %}    
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 {% endblock content %}
