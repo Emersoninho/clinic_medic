@@ -1,1 +1,1 @@
-from HomeView import *
+from .HomeView import *
