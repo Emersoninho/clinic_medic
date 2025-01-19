@@ -16,6 +16,11 @@ def list_medics_view(request):
         medics = medics.filter(specialties__id=speciality)
     if neighborhood is not None:
         medics = medics.filter(addresses__neighborhood=neighborhood)
+    else:
+        if city is not None:
+            medics = medics.filter(addresses__neighborhood__city=city)
+        elif state is not None:
+            medics = medics.filter(addresses__neighborhood__state=state)
 
     print(medics.all())
     return HttpResponse('Listagem de 1 ou mais médicos')
