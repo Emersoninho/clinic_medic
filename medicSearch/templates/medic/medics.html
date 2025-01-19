@@ -39,7 +39,7 @@
                             <li class="page-item"><a class="page-link" href="#">Página {{medics.number}} de {{medics.paginator.num_pages}}.</a></li>
                         {% if medics.has_next %}
                             <li class="page-item"><a class="page-link" href="?page={{medics.next_page_number}}{{parameters}}">Próximo</a></li>
-                            <li class="page-item"><a class="page-link" href="?page={{medics.paginator.num+pages}}{{parameters}}">Último &raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{medics.paginator.num_pages}}{{parameters}}">Último &raquo;</a></li>
                         {% endif %}    
                     </ul>
                 </nav>
