@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from medicSearch.models import Profile
 from django.db.models import Q
 
@@ -24,5 +24,7 @@ def list_medics_view(request):
         elif state is not None:
             medics = medics.filter(addresses__neighborhood__state=state)
 
-    print(medics.all())
-    return HttpResponse('Listagem de 1 ou mais médicos')
+    context = {
+        'medics': medics
+    }
+    return render(request, template_name='medic/medics.html', context=context, status=200)
