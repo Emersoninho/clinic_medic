@@ -74,5 +74,5 @@ def add_favorite_view(request):
     if state:
         arguments += "&state=%s" % state
     arguments += "&msg=%s&type=%s" % (msg, _type)
-    
+
     return redirect(to='/medic/%s' % arguments)
