@@ -13,6 +13,14 @@
                             <div class="image-circle" style="background-image: url('/media/{{medic.image}}');"></div>
                             <div class="card-body">
                                 <h5 class="card-title">{{medic.user.get_full_name}}</h5>
+                                <ul class="specialties">
+                                    {% for speciality in medic.specialties.all %}
+                                        <li>{{speciality}}</li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="address mb-2" title="{{medic.addresses.firstaddress}}"
+                                alt="{{medic.addresses.first.address}}">
+                                {{medic.addresses.first.address | default:"Nenhum Endereço." | slice:":15"}}...</div>
                                 <a href="{% url 'profile' medic.user.id %}" class="btn btn-primary btn-card">Ver médico</a>
                                 <button class="btn btn-danger btn-card"><i class="fa fa-heart"></i>Favoritos</button>
                             </div>
