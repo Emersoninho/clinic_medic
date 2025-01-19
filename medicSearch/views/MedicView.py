@@ -7,7 +7,7 @@ def list_medics_view(request):
     neighborhood = request.GET.get('neighborhood')
     city = request.GET.get('city')
     state = request.GET.get('state')
-    medics = Profile.objects.all()
+    medics = Profile.objects.filter(role=2).all()
     print(medics)
     
     return HttpResponse('Listagem de 1 ou mais médicos')
