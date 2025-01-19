@@ -23,7 +23,18 @@
                                 alt="{{medic.addresses.first.address}}">
                                 {{medic.addresses.first.address | default:"Nenhum Endereço." | slice:":15"}}...</div>
                                 <a href="{% url 'profile' medic.user.id %}" class="btn btn-primary btn-card">Ver médico</a>
-                                <button class="btn btn-danger btn-card"><i class="fa fa-heart"></i>Favoritos</button>
+                                {% if user.is_authenticated %}
+                                    <form method="POST" action="/medic/favorite">{% csrf_token %}
+                                        <input type="hidden" value="{{medic.user.id}}" name="id">
+                                        <input type="hidden" value="{{request.GET.page}}" name="page">
+                                        <input type="hidden" value="{{request.GET.name}}" name="name">
+                                        <input type="hidden" value="{{request.GET.speciality}}" name="speciality">
+                                        <input type="hidden" value="{{request.GET.neighborhood}}" name="neighborhood">
+                                        <input type="hidden" value="{{request.GET.city}}" name="city">
+                                        <input type="hidden" value="{{request.GET.state}}" name="state">
+                                        <button type="submit" class="btn btn-danger btn-card"><i class="fa fa-heart"></i>Favoritos</button>
+                                    </form>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
