@@ -45,7 +45,38 @@
             </ul>
           </div>
           {% if profile.role == 1 or profile.role == 3 %}
-            <div class="col-xs-12 col-md-9" id="favorites-area"></div>
+            <div class="col-xs-12 col-md-9" id="favorites-area">
+              <div class="alert alert-info">Total de favoritos:{{favorites | length}}</div>
+              <div class="row">
+                {% for favorite in favorites %}
+                  <div class="col-xs-12 col-md-4 col-lg-4">
+                    <div class="card mb-4">
+                      <div class="image-circle" style="background-image: url('/media/{{favorite.image}}');"></div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{favorite.user.get_full_name}}</h5>
+                        <h6>Nota:{{favorite.show_scoring_average}} <i class="fa fa-star"></i></h6>
+                        <ul class="specialties">
+                          {% for speciality in favorite.specialties.all %}
+                            <li>{{speciality}}</li>
+                          {% endfor %}
+                        </ul>
+                        <div class="address mb-2">
+                          {{favorite.addresses.first.address | default:"Nenhum endereço." | slice:":15"}}...
+                        </div>
+                        <a href="{%url 'profile' favorite.id %}" class="btn btn-primary btn-card">Ver médico</a>
+                        {% if user.is_authenticated %}
+                          <form method="POST" action="{% url 'medic-favorite-remove' %}">{% csrf_token %}
+                            <input type="hidden" value="{{favorite.id}}" name="id">
+                            <input type="hidden" value="{{request.GET.page}}" name="page">
+                            <button type="submit" class="btn btn-danger btn-card"><i class="fa fa-heart"></i>Remover</button>
+                          </form>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           {% else %}
             <div class="col-xs-12 col-md-3" id="addresses-area"></div>
             <div class="col-xs-12 col-md-6" id="ratings-area"></div>
