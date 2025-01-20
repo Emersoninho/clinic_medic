@@ -4,22 +4,26 @@ from django.core.paginator import Paginator
 
 def list_profile_view(request, id=None):
     profile = None
-    if id is None and request.user.is_authenticated:
-        profile = Profile.objects.filter(user=request.user).first()
-    elif id is None:
+    if id is None:
+        if request.user.is_authenticated:
+            profile = Profile.objects.filter(user=request.user).first()
+        else:
+            return redirect(to='/login/')
+    else:
         profile = Profile.objects.filter(user__id=id).first()
-    elif not redirect.user.is_authenticated:
-        return redirect(to='/')
     
-    favorites = Profile.show_favorites()
-    if len(favorites) > 0:
-        paginator = Paginator(favorites, 8)
-        page = request.GET.get('page')
-        favorites = paginator.get_page(page)
+    if not profile:
+        return redirect(to='/')  # Ou mostre uma mensagem de erro personalizada
+    
+    favorites = profile.show_favorites() if profile else []
+
+    paginator = Paginator(favorites, 8)
+    page = request.GET.get('page')
+    favorites = paginator.get_page(page)
 
     context = {
         'profile': profile,
-        'favorites': favorites
-    }    
+        'favorites': favorites,
+    }
 
-    return render(request, template_name='profile/profile.html', context=context, status=200)
+    return render(request, 'profile/profile.html', context, status=200)
