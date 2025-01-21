@@ -139,9 +139,24 @@
                   </ul>
                 </div>
               </div>
+              <div class="row">
+                <nav aria-label="Page navigation" class="navigation">
+                  <ul class="pagination">
+                  {% if ratings.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primeiro</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ratings.previous_page_number }}">Anterior</a></li>
+                  {% endif %}
+                    <li class="page-item"><a class="page-link" href="#">Página{{ ratings.number }} de {{ ratings.paginator.num_pages }}.</a></li>
+                  {% if ratings.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ratings.next_page_number }}">Próximo</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ratings.paginator.num_pages }}">Último &raquo;</a></li>
+                  {% endif %}
+                </ul>
+              </nav>
             </div>
-          {% endif %}
+            </div>
+                  {% endif %}
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 {% endblock %}
