@@ -96,7 +96,31 @@
               </div>
             </div>
           {% else %}
-            <div class="col-xs-12 col-md-3" id="addresses-area"></div>
+            <div class="col-xs-12 col-md-3" id="addresses-area">
+              <div class="alert alert-info">Total de endereço:{{profile.addresses.all | length}}</div>
+              <div class="row">
+                {% for address in profili.addresses.all %}
+                  <div class="col-xs-12 col-md-12">
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{address.address}},
+                          {{address.neighborhood.name}}, {{address.neighborhood.city}}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Telefone:{{address.phone}}</h6>
+                          <ul id="days">
+                            <li>Dias de funcionamento:</li>
+                            {% for day in address.days_week.all %}
+                            <li>- {{day.name}} | {{address.opening_time}} - {{address.closing_time}}</li>
+                            {% endfor%}
+                          </ul>
+                          {% if profile.user.id == request.user.id %}
+                            <a href="/address/{{address.id}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                          {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
             <div class="col-xs-12 col-md-6" id="ratings-area"></div>
           {% endif %}
         </div>
