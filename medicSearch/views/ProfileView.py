@@ -39,6 +39,8 @@ def list_profile_view(request, id=None):
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     emailunused = True
+    message = None
+
     if request.method == 'POST':
         profileform = UserProfileForm(request.POST, request.FILES, instance=profile)
         userform = UserForm(request.POST, instance=request.user)
@@ -51,10 +53,18 @@ def edit_profile(request):
     if profileform.is_valid() and userform.is_valid() and emailunused:
         profileform.save()
         userform.save()
+        message = {'type': 'success', 'text': 'Dados atualizados com sucesso'}
+    else:
+        if request.method == 'POST':
+            if emailunused:
+                message = {'type': 'danger', 'text': 'Dados inválidos'}
+            else:
+                message = {'type': 'warning', 'text': 'E-mail já utilizado por outro usuário'}
 
     context = {
         'profileform': profileform,
         'userform': userform,
+        'message': message,
     }
 
     return render(request, template_name='user/profile.html', context=context, status=200)
