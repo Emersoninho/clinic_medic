@@ -40,7 +40,7 @@ def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     emailunused = True
     if request.method == 'POST':
-        profileform = UserProfileForm(request.POST, instance=profile)
+        profileform = UserProfileForm(request.POST, request.FILES, instance=profile)
         userform = UserForm(request.POST, instance=request.user)
         verifyemail = Profile.objects.filter(user__email=request.POST['email']).exclude(user__id=request.user.id).first()
         emailunused = verifyemail is None
@@ -51,7 +51,7 @@ def edit_profile(request):
     if profileform.is_valid() and userform.is_valid() and emailunused:
         profileform.save()
         userform.save()
-        
+
     context = {
         'profileform': profileform,
         'userform': userform,
