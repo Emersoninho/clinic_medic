@@ -16,6 +16,8 @@
                                 {{f.label}}
                                 {{f}}
                             </div>
+                        {% else %}
+                            {{f}}    
                         {% endif %}
                     {% endfor %}
                     {% for f in profileform %}

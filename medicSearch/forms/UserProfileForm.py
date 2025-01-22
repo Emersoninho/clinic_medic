@@ -9,6 +9,16 @@ class UserProfileForm(ModelForm):
         if self.instance and self.instance.role != 1:
             del self.fields['role']
 
+    class Meta:
+        model = Profile
+        fields = ['user', 'role', 'birthday', 'image']
+        widgets = {
+            'user': forms.HiddenInput(),
+            'role': forms.Select(attrs={'class': 'form-control'}),
+            'birthday': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'image': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
 class UserForm(ModelForm):
     class Meta:
         model = User
@@ -18,14 +28,4 @@ class UserForm(ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-    class Meta:
-        model = Profile
-        fields = ['user', 'role', 'birthday', 'image']
-        widgets = {
-            'user': forms.HiddenInput(),
-            'role': forms.Select(attrs={'class': 'form-control'}),
-            'birthday': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'image': forms.FileInput(attrs={'class': 'form-control-file'}),
         }
