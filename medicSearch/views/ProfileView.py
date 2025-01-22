@@ -38,9 +38,20 @@ def list_profile_view(request, id=None):
 
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
-    profileform = UserProfileForm(instance=profile)
-    userform = UserForm(instance=request.user)
+    emailunused = True
+    if request.method == 'POST':
+        profileform = UserProfileForm(request.POST, instance=profile)
+        userform = UserForm(request.POST, instance=request.user)
+        verifyemail = Profile.objects.filter(user__email=request.POST['email']).exclude(user__id=request.user.id).first()
+        emailunused = verifyemail is None
+    else:
+        profileform = UserProfileForm(instance=profile)
+        userform = UserForm(instance=request.user)
 
+    if profileform.is_valid() and userform.is_valid() and emailunused:
+        profileform.save()
+        userform.save()
+        
     context = {
         'profileform': profileform,
         'userform': userform,
