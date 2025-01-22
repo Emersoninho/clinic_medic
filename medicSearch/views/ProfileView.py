@@ -38,7 +38,7 @@ def list_profile_view(request, id=None):
 
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
-    profileform = UserProfileForm(isinstance=profile)
+    profileform = UserProfileForm(instance=profile)
 
     context = {
         'profileform': profileform,
