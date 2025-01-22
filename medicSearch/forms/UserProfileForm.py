@@ -3,6 +3,11 @@ from django import forms
 from medicSearch.models.Profile import Profile
 
 class UserProfileForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        if self.isinstance and self.instance.role != 1:
+            del self.fields['role']
+            
     class Meta:
         model = Profile
         fields = ['user', 'role', 'birthday', 'image']
