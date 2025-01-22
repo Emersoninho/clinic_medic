@@ -10,6 +10,14 @@
             <form class="col-md-6 col-lg-4 offset-md-3 offset-lg-4" method="POST" action="">
                 <div class="row">
                     {% csrf_token %}
+                    {% for f in userform %}
+                        {% if not f.is_hidden %}
+                            <div class="form-group col-md-6">
+                                {{f.label}}
+                                {{f}}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                     {% for f in profileform %}
                         {% if not f.is_hidden %}
                             <div class="form-group col-md-6">
